@@ -1,4 +1,4 @@
-# reaction-dummy-data-ui
+# admin-plugin-product-boxes
 
 A user interface for [`@outgrow/reaction-dummy-data`](https://github.com/outgrow/reaction-dummy-data).
 
