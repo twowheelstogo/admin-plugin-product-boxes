@@ -10,7 +10,7 @@ registerOperatorRoute({
   MainComponent: ProductBundleDetailLayout,
   path: "/bundles/:bundleId"
 });
-
+//comentario de prueba
 registerOperatorRoute({
   group: "navigation",
   LayoutComponent: ContentViewExtraWideLayout,
