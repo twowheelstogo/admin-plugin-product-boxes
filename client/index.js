@@ -1,12 +1,20 @@
 import React from "react";
 import { withApollo } from "react-apollo";
-import CodeBracesBox from "mdi-material-ui/CodeBracesBox";
+import CodeBracesBox from "mdi-material-ui/Archive";
 import { registerOperatorRoute } from "/imports/client/ui";
 import { ProductBundlesTable } from "../components";
+import ProductBundleDetailLayout from "../layout/ProductBundleDetailLayout";
+import ContentViewExtraWideLayout from "/imports/client/ui/layouts/ContentViewExtraWideLayout";
+
+registerOperatorRoute({
+  MainComponent: ProductBundleDetailLayout,
+  path: "/bundles/:bundleId"
+});
 
 registerOperatorRoute({
   group: "navigation",
-  mainComponent: ProductBundlesTable,
+  LayoutComponent: ContentViewExtraWideLayout,
+  MainComponent: ProductBundlesTable,
   hocs: [
     withApollo
   ],

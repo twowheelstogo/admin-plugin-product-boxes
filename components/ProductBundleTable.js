@@ -157,7 +157,7 @@ function ProductBundlesTable() {
   }, []);
 
   const labels = useMemo(() => ({
-    globalFilterPlaceholder: i18next.t("admin.productTable.filters.placeholder")
+    globalFilterPlaceholder: i18next.t("admin.productBundleTable.filters.placeholder")
   }), []);
 
   const dataTableProps = useDataTable({
@@ -253,7 +253,7 @@ function ProductBundlesTable() {
   const selectedProducts = selectedRows.length ? `${selectedRows.length} selected` : "";
   const cardTitle = (
     <Fragment>
-      {i18next.t("admin.products")}<span className={classes.selectedProducts}>{selectedProducts}</span>
+      {i18next.t("admin.bundles")}<span className={classes.selectedProducts}>{selectedProducts}</span>
     </Fragment>
   );
 
