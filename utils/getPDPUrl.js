@@ -13,9 +13,9 @@ export default function getPDPUrl({ bundleId, variantId, parentVariantId, shopId
   if (variantId && parentVariantId) {
     // Option
     url = `${url}bundles/${bundleId}/${parentVariantId}/${variantId}`;
-  } else if (variantId) {
+  } else if (productId && variantId) {
     // Variant
-    url = `${url}bundles/${bundleId}/${variantId}`;
+    url = `${url}bundles/${bundleId}/${productId}/${variantId}`;
   } else if (productId) {
     url = `${url}bundles/${bundleId}/${productId}`;
   } else {
