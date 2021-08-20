@@ -42,13 +42,20 @@ function useBundle(args = {}) {
         bundleId: bundleIdLocal = productBundle._id,
         shopId: shopIdLocal = shopId
     }) => {
+        let bundleInput = bundleLocal;
+        if(!Number.isNaN(Number(bundleLocal.limit))) {
+            bundleInput = {
+                ...bundleLocal,
+                limit: Number(bundleLocal.limit)
+            }
+        }
         try {
             await updateProductBundle({
                 variables: {
                     input: {
                         bundleId: bundleIdLocal,
                         shopId: shopIdLocal,
-                        productBundle: bundleLocal
+                        productBundle: bundleInput
                     }
                 }
             });
