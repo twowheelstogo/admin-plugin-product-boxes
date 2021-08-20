@@ -67,7 +67,7 @@ class BundleForm extends Component {
             >
                 <Grid>
                     <ColFull>
-                        <Field name="name" label={"Título"} labelFor={nameInputId} isOptional>
+                        <Field name="name" label={"Título"} labelFor={nameInputId} >
                             <TextInput
                                 id={nameInputId}
                                 name="name"
@@ -78,7 +78,7 @@ class BundleForm extends Component {
                         </Field>
                     </ColFull>
                     <ColFull>
-                        <Field name="subtitle" label={"Subtítulo"} labelFor={subtitleInputId} isOptional>
+                        <Field name="subtitle" label={"Subtítulo"} labelFor={subtitleInputId} >
                             <TextInput
                                 id={subtitleInputId}
                                 name="subtitle"
@@ -89,7 +89,7 @@ class BundleForm extends Component {
                         </Field>
                     </ColFull>
                     <ColFull>
-                        <Field name="description" label={"Descripción"} labelFor={descriptionInputId} isOptional>
+                        <Field name="description" label={"Descripción"} labelFor={descriptionInputId} >
                             <TextInput
                                 id={descriptionInputId}
                                 name="description"
@@ -100,7 +100,7 @@ class BundleForm extends Component {
                         </Field>
                     </ColFull>
                     <ColFull>
-                        <Field name="limit" label={"Límite de productos"} labelFor={limitInputId} isOptional>
+                        <Field name="limit" label={"Límite de productos"} labelFor={limitInputId} >
                             <TextInput
                                 id={limitInputId}
                                 name="limit"
