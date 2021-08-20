@@ -7,6 +7,8 @@ mutation updateProductBundle($input: UpdateProductBundleInput!){
     _id
     name
     limit
+    subtitle
+    description
     items{
       _id
       title

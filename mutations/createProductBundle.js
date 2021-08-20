@@ -7,10 +7,13 @@ export default gql`
     _id
     name
     limit
+    subtitle
+    description
     items{
       _id
       title
     }
+    variantId
     product{
       _id
     }

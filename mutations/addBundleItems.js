@@ -7,6 +7,8 @@ mutation addBundleItems($input: AddBundleItemsInput!){
     _id
     name
     limit
+    subtitle
+    description
     items{
       _id
       title

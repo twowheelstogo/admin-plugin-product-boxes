@@ -8,10 +8,13 @@ query productBundle($productId: ID, $shopId: ID!, $bundleId: ID){
     _id
     name
     limit
+    subtitle
+    description
     items{
       _id
       title
     }
+    variantId
     product{
       ...Product
     }

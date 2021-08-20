@@ -33,10 +33,12 @@ export default gql`
     nodes {
       _id
       name
+      subtitle
       description
       items{
 				...Product
       }
+      variantId
       product{
         ...Product
       }
