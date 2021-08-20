@@ -51,7 +51,7 @@ const buildFormvalue = (value) => {
         name: value.name,
         description: value.description,
         subtitle: value.subtitle,
-        limit: value.limit.toString()
+        limit: value.limit && value.limit.toString()
     }
 }
 

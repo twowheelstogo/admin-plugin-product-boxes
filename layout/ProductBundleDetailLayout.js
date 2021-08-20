@@ -45,7 +45,10 @@ const StyledTab = withStyles((theme) => ({
 
 const ProductBundleDetailLayout = (props) => {
     const [value, setValue] = React.useState(0);
-    const { productBundle, isLoading, onUpdateBundle } = useBundle();
+    const { productBundle, isLoading, onUpdateBundle, onAddBundleItems } = useBundle();
+
+    const items = (productBundle && productBundle.items) || [];
+
     const { onUpdateProductVariantPrices } = useProduct();
 
     const handleChange = (event, newValue) => {
@@ -69,7 +72,10 @@ const ProductBundleDetailLayout = (props) => {
             label: "Productos",
             component: BundleProducts,
             onSubmit: null,
-            props: {}
+            props: {
+                products: items,
+                onAddBundleItems
+            }
         }
     ];
 
