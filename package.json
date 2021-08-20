@@ -9,6 +9,7 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "@apollo/react-components": "^4.0.0",
     "mdi-material-ui": "^6.11.0"
   },
   "babel": {
