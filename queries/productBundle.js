@@ -1,4 +1,6 @@
 import gql from "graphql-tag";
+import Product from "../../../included/product-admin/client/graphql/fragments/productWithVariants";
+
 
 export default gql`
 query productBundle($productId: ID, $shopId: ID!, $bundleId: ID){
@@ -11,43 +13,10 @@ query productBundle($productId: ID, $shopId: ID!, $bundleId: ID){
       title
     }
     product{
-      _id
-      title
-      pageTitle
-      description
-      media{
-        URLs{
-          original
-          thumbnail
-          large
-          medium
-          small
-        }
-      }
-      variants{
-        _id
-        title
-        pricing{
-          maxPrice
-          compareAtPrice{
-            amount
-          }
-          displayPrice
-        }
-      }
+      ...Product
     }
       items{
-        _id
-        title
-        media{
-          URLs{
-            original
-          }
-        }
-        description
-        pricing{
-          displayPrice
-        }
+        ...Product
       }
     shop{
       _id
@@ -55,4 +24,5 @@ query productBundle($productId: ID, $shopId: ID!, $bundleId: ID){
     }
   }
 }
+  ${Product}
 `;

@@ -1,4 +1,5 @@
 import gql from "graphql-tag";
+import Product from "../../../included/product-admin/client/graphql/fragments/productWithVariants";
 
 export default gql`
     query ProductBundles(
@@ -34,22 +35,10 @@ export default gql`
       name
       description
       items{
-				_id
-        title
+				...Product
       }
       product{
-        _id
-        title
-        isVisible
-        publishedProductHash
-        media {
-          URLs {
-            thumbnail
-          }
-        }
-        pricing {
-          displayPrice
-        }
+        ...Product
       }
       shop{
         _id
@@ -61,5 +50,5 @@ export default gql`
       totalCount
   }
 }
-
+  ${Product}
 `;
