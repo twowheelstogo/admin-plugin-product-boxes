@@ -4,7 +4,8 @@ import { withStyles } from "@material-ui/core/styles";
 import BundleConfiguration from "../components/BundleConfiguration";
 import BundleProducts from "../components/BundleProducts";
 import BundleActions from "../components/BundleActions";
-import withBundle from "../containers/withBundle";
+import useBundle from "../client/hooks/useBundle";
+// import withBundle from "../containers/withBundle";
 
 const StyledTabs = withStyles({
     indicator: {
@@ -43,7 +44,8 @@ const StyledTab = withStyles((theme) => ({
 
 const ProductBundleDetailLayout = (props) => {
     const [value, setValue] = React.useState(0);
-    const {productBundle} = props;
+    const { productBundle, isLoading } = useBundle();
+    console.log(productBundle);
 
     const handleChange = (event, newValue) => {
         console.log(newValue);
@@ -90,7 +92,6 @@ const ProductBundleDetailLayout = (props) => {
             />
         );
     }
-
     return (
         <Card>
             {renderTabs()}
@@ -99,4 +100,4 @@ const ProductBundleDetailLayout = (props) => {
     );
 }
 
-export default withBundle(withStyles(styles)(ProductBundleDetailLayout));
+export default withStyles(styles)(ProductBundleDetailLayout);

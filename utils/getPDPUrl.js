@@ -7,19 +7,20 @@
  * @param {String} args.shopId - A shop ID
  * @returns {String} A relative Url to the product's detail page
  */
- export default function getPDPUrl({ bundleId, variantId, parentVariantId, shopId }) {
-    let url = `/${shopId}/`;
-  
-    if (variantId && parentVariantId) {
-      // Option
-      url = `${url}bundles/${bundleId}/${parentVariantId}/${variantId}`;
-    } else if (variantId) {
-      // Variant
-      url = `${url}bundles/${bundleId}/${variantId}`;
-    } else {
-      url = `${url}bundles/${bundleId}`;
-    }
-  
-    return url;
+export default function getPDPUrl({ bundleId, variantId, parentVariantId, shopId, productId }) {
+  let url = `/${shopId}/`;
+
+  if (variantId && parentVariantId) {
+    // Option
+    url = `${url}bundles/${bundleId}/${parentVariantId}/${variantId}`;
+  } else if (variantId) {
+    // Variant
+    url = `${url}bundles/${bundleId}/${variantId}`;
+  } else if (productId) {
+    url = `${url}bundles/${bundleId}/${productId}`;
+  } else {
+    url = `${url}bundles/${bundleId}`;
   }
-  
+
+  return url;
+}

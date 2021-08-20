@@ -10,8 +10,9 @@ const { filesBaseUrl } = Meteor.settings.public;
  * @returns {React.Component} A React component
  */
 export default function MediaCell({ row }) {
-  const thumbnailUrl = row.original && row.original.media && row.original.media[0]
-    && row.original.media[0].URLs && row.original.media[0].URLs.thumbnail;
+  console.log(row);
+  const thumbnailUrl = row.original && row.original.product.media && row.original.product.media[0]
+    && row.original.product.media[0].URLs && (row.original.product.media[0].URLs.thumbnail || row.original.product.media[0].URLs.small);
 
   if (!thumbnailUrl) {
     return (

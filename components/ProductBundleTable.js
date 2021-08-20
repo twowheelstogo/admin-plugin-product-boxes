@@ -72,7 +72,7 @@ function ProductBundlesTable() {
   const columns = useMemo(() => [
     {
       Header: "",
-      accessor: "product.original.media[0].URLs.thumbnail",
+      accessor: "original.product.media[0].URLs.small",
       cellProps: () => ({
         style: {
           paddingLeft: 0,
@@ -148,7 +148,7 @@ function ProductBundlesTable() {
 
   // Row click callback
   const onRowClick = useCallback(async ({ row }) => {
-    const href = getPDPUrl({ bundleId: row.original._id, shopId: row.original.shop._id });
+    const href = getPDPUrl({ bundleId: row.original._id, shopId: row.original.shop._id, productId: row.original.product._id });
     history.push(href);
   }, [history]);
 
@@ -184,7 +184,7 @@ function ProductBundlesTable() {
     if (data) {
       console.log("data", data);
       const { createProductBundle: { productBundle } } = data;
-      history.push(`/${shopId}/bundles/${productBundle._id}`);
+      history.push(`/${shopId}/bundles/${productBundle._id}/${productBundle.productId}`);
     }
 
     if (createProductError) {

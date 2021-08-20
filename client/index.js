@@ -8,7 +8,7 @@ import ContentViewExtraWideLayout from "/imports/client/ui/layouts/ContentViewEx
 
 registerOperatorRoute({
   MainComponent: ProductBundleDetailLayout,
-  path: "/bundles/:bundleId"
+  path: "/bundles/:bundleId/:handle?"
 });
 
 registerOperatorRoute({
