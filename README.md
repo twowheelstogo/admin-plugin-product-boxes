@@ -2,7 +2,11 @@
 
 A user interface for [`@outgrow/reaction-dummy-data`](https://github.com/outgrow/reaction-dummy-data).
 
-![Screenshot of the UI](https://raw.githubusercontent.com/outgrow/reaction-dummy-data-ui/master/screenshot.png)
+![Screenshot of the Table](https://firebasestorage.googleapis.com/v0/b/twowheelstogo-572d7.appspot.com/o/resources%2Ftable.png?alt=media&token=ce33f239-195b-4748-b94c-6fe58b4b4a47)
+
+![Screenshot of Bundle Configuration](https://firebasestorage.googleapis.com/v0/b/twowheelstogo-572d7.appspot.com/o/resources%2Fdetails.png?alt=media&token=8138ad96-fc5d-4d0f-b076-01199655b899)
+
+![Screenshot of the Table of products](https://firebasestorage.googleapis.com/v0/b/twowheelstogo-572d7.appspot.com/o/resources%2Fproducttable.png?alt=media&token=fda983a0-e243-445f-8d40-d436e8e941de)
 
 ## How to use
 
