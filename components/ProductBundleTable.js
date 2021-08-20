@@ -148,7 +148,7 @@ function ProductBundlesTable() {
 
   // Row click callback
   const onRowClick = useCallback(async ({ row }) => {
-    const href = getPDPUrl({ bundleId: row.original._id, shopId: row.original.shop._id, productId: row.original.product._id });
+    const href = getPDPUrl({ bundleId: row.original._id, shopId: row.original.shop._id, productId: row.original.product._id, variantId: row.original.variantId });
     history.push(href);
   }, [history]);
 
@@ -184,7 +184,7 @@ function ProductBundlesTable() {
     if (data) {
       console.log("data", data);
       const { createProductBundle: { productBundle } } = data;
-      history.push(`/${shopId}/bundles/${productBundle._id}/${productBundle.productId}`);
+      history.push(`/${shopId}/bundles/${productBundle._id}/${productBundle.productId}/${productBundle.variantId}`);
     }
 
     if (createProductError) {

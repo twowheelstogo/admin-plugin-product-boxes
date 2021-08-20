@@ -12,7 +12,7 @@ import ProductMediaGallery from "../../../included/product-admin/client/componen
  */
 function ProductMediaForm(props) {
   const { product, shopId } = props;
-  console.log(product);
+  
   if (!product) {
     return null;
   }

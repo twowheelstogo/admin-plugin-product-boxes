@@ -5,6 +5,7 @@ import BundleConfiguration from "../components/BundleConfiguration";
 import BundleProducts from "../components/BundleProducts";
 import BundleActions from "../components/BundleActions";
 import useBundle from "../client/hooks/useBundle";
+import useProduct from "../../../included/product-admin/client/hooks/useProduct";
 // import withBundle from "../containers/withBundle";
 
 const StyledTabs = withStyles({
@@ -44,11 +45,10 @@ const StyledTab = withStyles((theme) => ({
 
 const ProductBundleDetailLayout = (props) => {
     const [value, setValue] = React.useState(0);
-    const { productBundle, isLoading } = useBundle();
-    console.log(productBundle);
+    const { productBundle, isLoading, onUpdateBundle } = useBundle();
+    const { onUpdateProductVariantPrices } = useProduct();
 
     const handleChange = (event, newValue) => {
-        console.log(newValue);
         setValue(newValue);
     };
 
@@ -59,7 +59,9 @@ const ProductBundleDetailLayout = (props) => {
             component: BundleConfiguration,
             onSubmit: null,
             props: {
-                productBundle
+                productBundle,
+                onUpdateBundle,
+                onUpdateProductVariantPrices
             }
         },
         {

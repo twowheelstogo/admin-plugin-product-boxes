@@ -1,12 +1,10 @@
 import React, { Component } from "react";
 import { withComponents } from "@reactioncommerce/components-context";
 import styled from "styled-components";
-import { applyTheme } from "@reactioncommerce/components/utils";
 import { Form } from "reacto-form";
 import PropTypes from "prop-types";
 import { CustomPropTypes } from "@reactioncommerce/components/utils";
 import uniqueId from "lodash.uniqueid";
-import { render } from "enzyme";
 
 const Grid = styled.div`
   display: flex;
@@ -106,7 +104,6 @@ class BundleForm extends Component {
                             <TextInput
                                 id={limitInputId}
                                 name="limit"
-                                type="number"
                                 placeholder="Ingrese un límite de selección"
                                 isOnDarkBackground={false}
                                 isReadOnly={isSaving}
