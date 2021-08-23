@@ -96,7 +96,7 @@ function ProductBundlesTable() {
     },
     {
       Header: i18next.t("admin.productBundleTable.header.price"),
-      accessor: "product.pricing.displayPrice"
+      accessor: "product.price.range"
     },
     {
       Header: i18next.t("admin.productBundleTable.header.published"),

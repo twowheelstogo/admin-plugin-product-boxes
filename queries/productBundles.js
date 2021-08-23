@@ -1,5 +1,5 @@
 import gql from "graphql-tag";
-import Product from "../../../included/product-admin/client/graphql/fragments/productWithVariants";
+import Product from "../fragments/productWithVariants";
 
 export default gql`
     query ProductBundles(
