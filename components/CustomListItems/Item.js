@@ -49,7 +49,7 @@ const CustomDescription = styled.div`
 `;
 
 const Item = (props) => {
-    const { product, onClick } = props;
+    const { product, handleClick } = props;
     const { media, title, description, _id } = product;
 
     return (
@@ -68,6 +68,7 @@ const Item = (props) => {
                     size="small"
                     color="primary"
                     variant="outlined"
+                    onClick = {()=>handleClick({product})}
                 >
                     {"Remover"}
                 </Button>
@@ -92,14 +93,14 @@ Item.propTypes = {
             })
         }))
     }),
-    onClick: PropTypes.func
+    handleClick: PropTypes.func
 };
 
 Item.defaultProps = {
     product: {
 
     },
-    onClick() { }
+    handleClick() { }
 };
 
 export default Item;

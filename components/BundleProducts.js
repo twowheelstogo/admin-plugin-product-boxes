@@ -23,7 +23,7 @@ const CustomTitle = styled.div`
 `;
 
 const BundleProducts = (props) => {
-    const { products: productItems, onAddBundleItems, bundleId } = props;
+    const { products: productItems, onAddBundleItems, bundleId, onRemoveBundleItems } = props;
     const [open, setOpen] = useState(false);
     const [isLoading, setIsLoading] = useState(false);
     const [products, setProducts] = useState([]);
@@ -57,9 +57,9 @@ const BundleProducts = (props) => {
         setIsLoading(false);
     }, [apolloClient, shopId]);
 
-    const addBundleItems = useCallback(async({itemIds}) => {
+    const addBundleItems = useCallback(async ({ itemIds }) => {
 
-        if(!shopId){
+        if (!shopId) {
             return;
         }
 
@@ -70,6 +70,19 @@ const BundleProducts = (props) => {
         });
 
         handleClose();
+
+    }, []);
+
+    const removeBundleItem = useCallback(async ({ _id }) => {
+        const itemIds = [_id];
+
+        if (!shopId) return;
+
+        await onRemoveBundleItems({
+            itemIds,
+            bundleId,
+            shopId
+        });
 
     }, []);
 
@@ -92,7 +105,7 @@ const BundleProducts = (props) => {
                 >{"Agregar producto"}</Button>
             </CustomHeader>
             <CustomTitle>{"Productos"}</CustomTitle>
-            <CustomListItems products={productItems} />
+            <CustomListItems products={productItems} onRemoveItem={removeBundleItem} />
             <ProductsModal
                 {...modalProps}
             />

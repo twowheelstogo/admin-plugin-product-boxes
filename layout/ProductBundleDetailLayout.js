@@ -45,7 +45,7 @@ const StyledTab = withStyles((theme) => ({
 
 const ProductBundleDetailLayout = (props) => {
     const [value, setValue] = React.useState(0);
-    const { productBundle, isLoading, onUpdateBundle, onAddBundleItems } = useBundle();
+    const { productBundle, isLoading, onUpdateBundle, onAddBundleItems, onRemoveBundleItems } = useBundle();
 
     const items = (productBundle && productBundle.items) || [];
 
@@ -75,6 +75,7 @@ const ProductBundleDetailLayout = (props) => {
             props: {
                 products: items,
                 onAddBundleItems,
+                onRemoveBundleItems,
                 bundleId: productBundle?._id
             }
         }

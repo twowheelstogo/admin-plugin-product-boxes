@@ -4,22 +4,30 @@ import Item from "./Item";
 
 class CustomListItems extends Component {
 
+    handleClick = ({ product }) => {
+        const { onRemoveItem } = this.props;
+
+        onRemoveItem({ _id: product._id });
+    }
+
     render() {
         const { products } = this.props;
         return (
             <div>
-                {products.map((product) => <Item product={product} />)}
+                {products.map((product) => <Item product={product} handleClick={this.handleClick} />)}
             </div>
         );
     }
 };
 
 CustomListItems.propTypes = {
-    products: PropTypes.arrayOf(PropTypes.any)
+    products: PropTypes.arrayOf(PropTypes.any),
+    onRemoveItems: PropTypes.func
 };
 
 CustomListItems.defaultProps = {
-    products: []
+    products: [],
+    onRemoveItem() { }
 };
 
 export default CustomListItems;

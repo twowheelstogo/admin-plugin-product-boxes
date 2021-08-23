@@ -2,7 +2,7 @@ import { useCallback } from "react";
 import { useParams } from "react-router-dom";
 import { useSnackbar } from "notistack";
 import { productBundleQuery } from "../../queries";
-import { updateProductBundleMutation, addBundleItemsMutation } from "../../mutations";
+import { updateProductBundleMutation, addBundleItemsMutation, removeBundleItemsMutation } from "../../mutations";
 import { useQuery, useMutation } from "@apollo/react-hooks";
 
 /**
@@ -26,6 +26,7 @@ function useBundle(args = {}) {
     const shopId = routeParams.shopId || shopIdProp;
     const [updateProductBundle] = useMutation(updateProductBundleMutation);
     const [addBundleItems] = useMutation(addBundleItemsMutation);
+    const [removeBundleItems] = useMutation(removeBundleItemsMutation);
 
     const { data: bundleQueryResult, isLoading, refetch: refetchBundle } = useQuery(productBundleQuery, {
         variables: {
@@ -43,7 +44,7 @@ function useBundle(args = {}) {
         shopId: shopIdLocal = shopId
     }) => {
         let bundleInput = bundleLocal;
-        if(!Number.isNaN(Number(bundleLocal.limit))) {
+        if (!Number.isNaN(Number(bundleLocal.limit))) {
             bundleInput = {
                 ...bundleLocal,
                 limit: Number(bundleLocal.limit)
@@ -83,20 +84,46 @@ function useBundle(args = {}) {
             });
 
             refetchBundle();
-            
+
             enqueueSnackbar("Productos agregados correctamente", { variant: "success" });
         } catch (error) {
             console.error(error.message);
             enqueueSnackbar("Error al agregar productos al bundle", { variant: "error" });
         }
-    }, [productBundle, refetchBundle])
+    }, [productBundle, refetchBundle]);
+
+    const onRemoveBundleItems = useCallback(async ({
+        itemIds,
+        bundleId: bundleIdLocal = productBundle._id,
+        shopId: shopIdLocal = shopId
+    }) => {
+        try {
+            await removeBundleItems({
+                variables: {
+                    input: {
+                        itemIds,
+                        bundleId: bundleIdLocal,
+                        shopId: shopIdLocal
+                    }
+                }
+            });
+
+            refetchBundle();
+
+            enqueueSnackbar("Producto eliminado de la lista correctamente", { variant: "success" });
+        } catch (error) {
+            console.error(error.message);
+            enqueueSnackbar("Error al eliminar producto del bundle", { variant: "error" });
+        }
+    }, [productBundle, refetchBundle]);
 
     return {
         isLoading,
-        productBundle:bundleQueryResult && bundleQueryResult.productBundle,
+        productBundle: bundleQueryResult && bundleQueryResult.productBundle,
         refetchBundle,
         onUpdateBundle,
         onAddBundleItems,
+        onRemoveBundleItems,
         shopId
     }
 
