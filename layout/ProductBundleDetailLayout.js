@@ -74,7 +74,8 @@ const ProductBundleDetailLayout = (props) => {
             onSubmit: null,
             props: {
                 products: items,
-                onAddBundleItems
+                onAddBundleItems,
+                bundleId: productBundle?._id
             }
         }
     ];

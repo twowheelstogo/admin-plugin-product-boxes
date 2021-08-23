@@ -57,11 +57,7 @@ const buildFormvalue = (value) => {
 
 const buildPricing = (product, variantId) => {
 
-    console.log(product, variantId)
-
     const variant = product.variants[0];
-
-    console.log(variant);
 
     if (!variant) return null;
 
@@ -92,7 +88,7 @@ const BundleConfiguration = (props) => {
     const { product, shop, variantId } = productBundle;
 
     const updateProductPricing = async (value) => {
-        console.log("prices", convertPricingToFloat(value));
+
         await onUpdateProductVariantPrices({
             variantId: productBundle.variantId,
             variantPrices: convertPricingToFloat(value)

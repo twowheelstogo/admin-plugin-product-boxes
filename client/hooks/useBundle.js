@@ -81,6 +81,9 @@ function useBundle(args = {}) {
                     }
                 }
             });
+
+            refetchBundle();
+            
             enqueueSnackbar("Productos agregados correctamente", { variant: "success" });
         } catch (error) {
             console.error(error.message);
