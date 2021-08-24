@@ -10,6 +10,10 @@ A user interface for [`@outgrow/reaction-dummy-data`](https://github.com/outgrow
 
 ## How to use
 
+Install this plugin into reaction API before:
+
+https://github.com/twowheelstogo/api-plugin-product-boxes
+
 Open a terminal in your `reaction-development-platform` root directory. Run `make dev-link-reaction-admin` to ensure that `reaction-admin` is running in development mode. Without development mode enabled, changes made to the project's local files won't be built and won't take effect.
 
 Once development mode is enabled, `cd` into your `reaction-admin` project's `/imports/plugins/custom` directory.
@@ -17,10 +21,10 @@ Once development mode is enabled, `cd` into your `reaction-admin` project's `/im
 Clone the plugin:
 
 ```bash
-git clone https://github.com/outgrow/reaction-dummy-data-ui
+git clone git@github.com:twowheelstogo/admin-plugin-product-boxes.git
 ```
 
-Restart `reaction-admin`. You should now see the "Dummy Data" link in your sidebar on [localhost:4080](https://localhost:4080).
+Restart `reaction-admin`. You should now see the "Bundles" link in your sidebar on [localhost:4080](https://localhost:4080).
 
 ## Help
 
