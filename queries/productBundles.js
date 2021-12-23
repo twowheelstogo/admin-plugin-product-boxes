@@ -1,5 +1,5 @@
 import gql from "graphql-tag";
-import Product from "../fragments/productWithVariants";
+import ProductBundle from "../fragments/productBundle";
 
 export default gql`
     query ProductBundles(
@@ -31,20 +31,7 @@ export default gql`
     bundleIds: $bundleIds
   ) {
     nodes {
-      _id
-      name
-      subtitle
-      description
-      items{
-				...Product
-      }
-      variantId
-      product{
-        ...Product
-      }
-      shop{
-        _id
-      }
+      ...ProductBundle
     }
       pageInfo {
         hasNextPage
@@ -52,5 +39,5 @@ export default gql`
       totalCount
   }
 }
-  ${Product}
+  ${ProductBundle}
 `;

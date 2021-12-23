@@ -60,12 +60,13 @@ function useBundle(args = {}) {
                     }
                 }
             });
+            refetchBundle();
             enqueueSnackbar("Bundle actualizado correctamente", { variant: "success" });
         } catch (error) {
             console.error(error.message);
             enqueueSnackbar("Error al actualizar el bundle", { variant: "error" });
         }
-    }, [productBundle, refetchBundle, enqueueSnackbar]);
+    }, [productBundle, enqueueSnackbar]);
 
     const onAddBundleItems = useCallback(async ({
         itemIds,

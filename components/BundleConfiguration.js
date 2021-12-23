@@ -82,7 +82,7 @@ const convertPricingToFloat = (pricing) => {
 }
 
 const BundleConfiguration = (props) => {
-    const { productBundle, onUpdateProductVariantPrices, onUpdateBundle } = props;
+    const { productBundle, onUpdateProductVariantPrices, onUpdateBundle, refetchBundle } = props;
 
     if (!productBundle) return <div>{"cargando..."}</div>
     const { product, shop, variantId } = productBundle;
@@ -92,7 +92,8 @@ const BundleConfiguration = (props) => {
         await onUpdateProductVariantPrices({
             variantId: productBundle.variantId,
             variantPrices: convertPricingToFloat(value)
-        })
+        });
+        refetchBundle();
     };
 
     const updateBundle = async (value) => {

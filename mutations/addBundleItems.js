@@ -1,26 +1,12 @@
 import gql from "graphql-tag";
-
+import ProductBundle from "../fragments/productBundle";
 export default gql`
 mutation addBundleItems($input: AddBundleItemsInput!){
 	addBundleItems(input: $input){
 	productBundle{
-    _id
-    name
-    limit
-    subtitle
-    description
-    items{
-      _id
-      title
-    }
-    product{
-      _id
-    }
-    shop{
-      _id
-      name
-    }
+    ...ProductBundle
   }
   }
 }
+${ProductBundle}
 `;
