@@ -7,7 +7,7 @@ import ProductsModal from "./ProductsModal";
 import { useApolloClient } from "@apollo/react-hooks";
 import productsQuery from "../queries/products";
 import useCurrentShopId from "/imports/client/ui/hooks/useCurrentShopId";
-
+import ItemsGroupModal from "./ItemsGroupModal";
 
 const CustomHeader = styled.div`
     display: flex;
@@ -23,16 +23,19 @@ const CustomTitle = styled.div`
 `;
 
 const BundleProducts = (props) => {
-    const { products: productItems, onAddBundleItems, bundleId, onRemoveBundleItems } = props;
+    const { products: productItems, onAddBundleItems, bundleId, onRemoveBundleItems, handleCreateBundleItemsGroup } = props;
     const [open, setOpen] = useState(false);
+    const [openGroup, setOpenGroup] = useState(false);
     const [isLoading, setIsLoading] = useState(false);
+    const [isSavingGroup, setIsSavingGroup] = useState(false);
     const [products, setProducts] = useState([]);
     const apolloClient = useApolloClient();
     const [shopId] = useCurrentShopId();
 
     const handleOpen = () => setOpen(true);
-
     const handleClose = () => setOpen(false);
+    const handleOpenGroup = () => setOpenGroup(true);
+    const handleCloseGroup = () => setOpenGroup(false);
 
     const onFetchData = useCallback(async ({ globalFilter }) => {
         setIsLoading(true);
@@ -95,19 +98,35 @@ const BundleProducts = (props) => {
         addBundleItems
     };
 
+    const modalGroupProps = {
+        open: openGroup,
+        handleClose: handleCloseGroup,
+        modalTitle: "Nuevo Grupo",
+        buttonText: "Crear Grupo",
+        onSubmit: async (value) => { 
+            setIsSavingGroup(true);
+            await handleCreateBundleItemsGroup(value);
+            setIsSavingGroup(false);
+            handleCloseGroup();
+         }
+    };
+
     return (
         <div>
             <CustomHeader>
                 <Button
                     variant="contained"
                     color="primary"
-                    onClick={handleOpen}
-                >{"Agregar producto"}</Button>
+                    onClick={handleOpenGroup}
+                >{"Agregar Grupo"}</Button>
             </CustomHeader>
             <CustomTitle>{"Productos"}</CustomTitle>
             <CustomListItems products={productItems} onRemoveItem={removeBundleItem} />
             <ProductsModal
                 {...modalProps}
+            />
+            <ItemsGroupModal
+                {...modalGroupProps}
             />
         </div>
     );

@@ -2,7 +2,12 @@ import { useCallback } from "react";
 import { useParams } from "react-router-dom";
 import { useSnackbar } from "notistack";
 import { productBundleQuery } from "../../queries";
-import { updateProductBundleMutation, addBundleItemsMutation, removeBundleItemsMutation } from "../../mutations";
+import {
+    updateProductBundleMutation,
+    addBundleItemsMutation,
+    removeBundleItemsMutation,
+    createBundleItemsGroupMutation
+} from "../../mutations";
 import { useQuery, useMutation } from "@apollo/react-hooks";
 
 /**
@@ -27,6 +32,7 @@ function useBundle(args = {}) {
     const [updateProductBundle] = useMutation(updateProductBundleMutation);
     const [addBundleItems] = useMutation(addBundleItemsMutation);
     const [removeBundleItems] = useMutation(removeBundleItemsMutation);
+    const [createBundleItemsGroup] = useMutation(createBundleItemsGroupMutation);
 
     const { data: bundleQueryResult, isLoading, refetch: refetchBundle } = useQuery(productBundleQuery, {
         variables: {
@@ -118,6 +124,44 @@ function useBundle(args = {}) {
         }
     }, [productBundle, refetchBundle]);
 
+    const handleCreateBundleItemsGroup = async ({ title, limit }) => {
+        try {
+            if (Number.isNaN(Number(limit))) throw new Error("el campo límite debe ser de tipo texto");
+
+            await createBundleItemsGroup({
+                variables: {
+                    input: {
+                        bundleId: productBundle._id,
+                        title,
+                        limit: Number(limit)
+                    }
+                }
+            });
+
+            refetchBundle();
+
+            enqueueSnackbar("Grupo creado correctamente", { variant: "sucess" });
+        } catch (error) {
+            console.error(error.message);
+            enqueueSnackbar(`${error.message}`, { variant: "error" });
+        }
+    }
+
+    const updateBundleItemsGroup = ({ title, limit }) => {
+        try {
+            if (Number.isNaN(Number(limit))) throw new Error("el campo límite debe ser de tipo texto");
+
+
+        } catch (error) {
+            console.error(error.message);
+            enqueueSnackbar(`${error.message}`, { variant: "error" });
+        }
+    }
+
+    const removeBundleItemsGroup = () => {
+
+    }
+
     return {
         isLoading,
         productBundle: bundleQueryResult && bundleQueryResult.productBundle,
@@ -125,7 +169,10 @@ function useBundle(args = {}) {
         onUpdateBundle,
         onAddBundleItems,
         onRemoveBundleItems,
-        shopId
+        shopId,
+        createBundleItemsGroup: handleCreateBundleItemsGroup,
+        updateBundleItemsGroup,
+        removeBundleItemsGroup
     }
 
 }
