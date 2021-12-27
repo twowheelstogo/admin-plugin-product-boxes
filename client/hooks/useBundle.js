@@ -2,7 +2,14 @@ import { useCallback } from "react";
 import { useParams } from "react-router-dom";
 import { useSnackbar } from "notistack";
 import { productBundleQuery } from "../../queries";
-import { updateProductBundleMutation, addBundleItemsMutation, removeBundleItemsMutation } from "../../mutations";
+import {
+    updateProductBundleMutation,
+    addBundleItemsMutation,
+    removeBundleItemsMutation,
+    createBundleItemsGroupMutation,
+    removeBundleItemsGroupMutation,
+    updateBundleItemsGroupMutation
+} from "../../mutations";
 import { useQuery, useMutation } from "@apollo/react-hooks";
 
 /**
@@ -27,7 +34,9 @@ function useBundle(args = {}) {
     const [updateProductBundle] = useMutation(updateProductBundleMutation);
     const [addBundleItems] = useMutation(addBundleItemsMutation);
     const [removeBundleItems] = useMutation(removeBundleItemsMutation);
-
+    const [createBundleItemsGroup] = useMutation(createBundleItemsGroupMutation);
+    const [removeBundleItemsGroup] = useMutation(removeBundleItemsGroupMutation);
+    const [updateBundleItemsGroup] = useMutation(updateBundleItemsGroupMutation);
     const { data: bundleQueryResult, isLoading, refetch: refetchBundle } = useQuery(productBundleQuery, {
         variables: {
             shopId,
@@ -60,17 +69,19 @@ function useBundle(args = {}) {
                     }
                 }
             });
+            refetchBundle();
             enqueueSnackbar("Bundle actualizado correctamente", { variant: "success" });
         } catch (error) {
             console.error(error.message);
             enqueueSnackbar("Error al actualizar el bundle", { variant: "error" });
         }
-    }, [productBundle, refetchBundle, enqueueSnackbar]);
+    }, [productBundle, enqueueSnackbar]);
 
     const onAddBundleItems = useCallback(async ({
         itemIds,
         bundleId: bundleIdLocal = productBundle._id,
-        shopId: shopIdLocal = shopId
+        shopId: shopIdLocal = shopId,
+        groupId
     }) => {
         try {
             await addBundleItems({
@@ -78,7 +89,8 @@ function useBundle(args = {}) {
                     input: {
                         itemIds,
                         bundleId: bundleIdLocal,
-                        shopId: shopIdLocal
+                        shopId: shopIdLocal,
+                        groupId
                     }
                 }
             });
@@ -117,6 +129,78 @@ function useBundle(args = {}) {
         }
     }, [productBundle, refetchBundle]);
 
+    const handleCreateBundleItemsGroup = async ({ title, limit }) => {
+        try {
+            if (Number.isNaN(Number(limit))) throw new Error("el campo límite debe ser de tipo texto");
+
+            await createBundleItemsGroup({
+                variables: {
+                    input: {
+                        bundleId: productBundle._id,
+                        title,
+                        limit: Number(limit)
+                    }
+                }
+            });
+
+            refetchBundle();
+
+            enqueueSnackbar("Grupo creado correctamente", { variant: "success" });
+        } catch (error) {
+            console.error(error.message);
+            enqueueSnackbar(`${error.message}`, { variant: "error" });
+        }
+    }
+
+    const handleUpdateBundleItemsGroup = async ({ groupId, title, limit }) => {
+        try {
+            if (limit && Number.isNaN(Number(limit))) throw new Error("el campo límite debe ser de tipo texto");
+            const groupInput = {
+                title,
+                limit: Number(limit)
+            }
+
+            await updateBundleItemsGroup({
+                variables: {
+                    input: {
+                        groupId,
+                        bundleId,
+                        shopId,
+                        group: groupInput
+                    }
+                }
+            });
+
+            refetchBundle();
+
+            enqueueSnackbar("Grupo actualizado correctamente", { variant: "success" });
+        } catch (error) {
+            console.error(error.message);
+            enqueueSnackbar(`${error.message}`, { variant: "error" });
+        }
+    }
+
+    const handleRemoveBundleItemsGroup = async (groupId) => {
+        try {
+            await removeBundleItemsGroup({
+                variables: {
+                    input: {
+                        groupId,
+                        bundleId,
+                        shopId
+                    }
+                }
+            });
+
+            refetchBundle();
+
+            enqueueSnackbar("Grupo eliminado correctamente", { variant: "success" });
+        } catch (error) {
+            console.error(error.message);
+            enqueueSnackbar(`${error.message}`, { variant: "error" });
+        }
+    }
+
     return {
         isLoading,
         productBundle: bundleQueryResult && bundleQueryResult.productBundle,
@@ -124,7 +208,10 @@ function useBundle(args = {}) {
         onUpdateBundle,
         onAddBundleItems,
         onRemoveBundleItems,
-        shopId
+        shopId,
+        createBundleItemsGroup: handleCreateBundleItemsGroup,
+        handleUpdateBundleItemsGroup,
+        handleRemoveBundleItemsGroup
     }
 
 }

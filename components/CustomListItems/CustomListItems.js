@@ -11,10 +11,10 @@ class CustomListItems extends Component {
     }
 
     render() {
-        const { products } = this.props;
+        const { products, isRemoving } = this.props;
         return (
             <div>
-                {products.map((product) => <Item product={product} handleClick={this.handleClick} />)}
+                {products.map((product) => <Item product={product} handleClick={this.handleClick} isRemoving={isRemoving} />)}
             </div>
         );
     }
