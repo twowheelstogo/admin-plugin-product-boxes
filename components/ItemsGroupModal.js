@@ -1,10 +1,11 @@
 import React from "react";
 import PropTypes from "prop-types";
-import { Dialog, DialogTitle, DialogContent, DialogActions, Button, Typography } from "@material-ui/core";
+import { Dialog, DialogTitle, DialogContent, DialogActions, Typography } from "@material-ui/core";
 import { Form } from "reacto-form";
 import styled from "styled-components";
 import { withComponents } from "@reactioncommerce/components-context";
 import uniqueId from "lodash.uniqueid";
+import { Button } from "@reactioncommerce/catalyst";
 
 const Grid = styled.div`
   display: flex;
@@ -35,6 +36,7 @@ function ItemsGroupModal(props) {
         values,
         open,
         handleClose,
+        isSaving,
         components: { Field, TextInput }
     } = props;
     let _form = null;
@@ -88,6 +90,8 @@ function ItemsGroupModal(props) {
                 <Button
                     color="primary"
                     variant="contained"
+                    isWaiting={isSaving}
+                    disabled={isSaving}
                     onClick={() => { _form.submit() }}
                 >{buttonText}</Button>
             </DialogActions>

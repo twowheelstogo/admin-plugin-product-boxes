@@ -2,7 +2,7 @@ import React from "react";
 import PropTypes from "prop-types";
 import styled from "styled-components";
 import RenderMedia from "./RenderMedia";
-import { Button } from "@material-ui/core";
+import { Button } from "@reactioncommerce/catalyst";
 
 const CustomItem = styled.div`
     display: flex;
@@ -49,7 +49,7 @@ const CustomDescription = styled.div`
 `;
 
 const Item = (props) => {
-    const { product, handleClick } = props;
+    const { product, handleClick, isRemoving } = props;
     const { media, title, description, _id } = product;
 
     return (
@@ -68,6 +68,7 @@ const Item = (props) => {
                     size="small"
                     color="primary"
                     variant="outlined"
+                    disabled={isRemoving}
                     onClick = {()=>handleClick({product})}
                 >
                     {"Remover"}

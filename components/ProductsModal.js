@@ -1,10 +1,11 @@
 import React, { useCallback, useState, useEffect, Fragment } from "react";
-import { Modal, TextField, Divider, Box, Button, Dialog, DialogActions, DialogContent, DialogTitle } from "@material-ui/core";
+import { Modal, TextField, Divider, Box, Dialog, DialogActions, DialogContent, DialogTitle } from "@material-ui/core";
 import PropTypes from "prop-types";
 import { makeStyles } from "@material-ui/core/styles";
 import { CustomPropTypes } from "@reactioncommerce/components/utils";
 import SelectableItems from "./CustomListItems/SelectableItems";
 import CircularProgress from '@material-ui/core/CircularProgress';
+import { Button } from "@reactioncommerce/catalyst";
 
 const useStyles = makeStyles((theme) => ({
     content: {
@@ -20,7 +21,7 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const ProductsModal = (props) => {
-    const { open, handleClose, onFetchData, isLoading, products, addBundleItems } = props;
+    const { open, handleClose, onFetchData, isLoading, products, addBundleItems, groupId, isSaving } = props;
     const [globalFilter, setGlobalFilter] = useState(null);
     const classes = useStyles();
     const [items, setItems] = useState([]);
@@ -46,6 +47,7 @@ const ProductsModal = (props) => {
 
             addBundleItems({
                 itemIds: items,
+                id: groupId
             });
         }
     };
@@ -95,6 +97,8 @@ const ProductsModal = (props) => {
                 <Button
                     color="primary"
                     variant="contained"
+                    isWaiting={isSaving}
+                    disabled={isSaving}
                     onClick={uploadProducts}
                 >
                     {"Agregar"}

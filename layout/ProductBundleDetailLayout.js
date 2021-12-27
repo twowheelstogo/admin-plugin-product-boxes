@@ -45,9 +45,11 @@ const StyledTab = withStyles((theme) => ({
 
 const ProductBundleDetailLayout = (props) => {
     const [value, setValue] = React.useState(0);
-    const { productBundle, isLoading, onUpdateBundle, onAddBundleItems, onRemoveBundleItems, refetchBundle, createBundleItemsGroup } = useBundle();
+    const { productBundle, isLoading, onUpdateBundle, onAddBundleItems, onRemoveBundleItems, refetchBundle, createBundleItemsGroup, handleUpdateBundleItemsGroup, handleRemoveBundleItemsGroup } = useBundle();
 
     const items = (productBundle && productBundle.items) || [];
+
+    const groups = (productBundle && productBundle.groups) || [];
 
     const { onUpdateProductVariantPrices } = useProduct();
 
@@ -75,10 +77,13 @@ const ProductBundleDetailLayout = (props) => {
             onSubmit: null,
             props: {
                 products: items,
+                groups,
                 onAddBundleItems,
                 onRemoveBundleItems,
                 bundleId: productBundle?._id,
-                handleCreateBundleItemsGroup: createBundleItemsGroup
+                handleCreateBundleItemsGroup: createBundleItemsGroup,
+                handleUpdateBundleItemsGroup,
+                handleRemoveBundleItemsGroup
             }
         }
     ];

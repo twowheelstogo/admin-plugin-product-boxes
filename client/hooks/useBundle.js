@@ -6,7 +6,9 @@ import {
     updateProductBundleMutation,
     addBundleItemsMutation,
     removeBundleItemsMutation,
-    createBundleItemsGroupMutation
+    createBundleItemsGroupMutation,
+    removeBundleItemsGroupMutation,
+    updateBundleItemsGroupMutation
 } from "../../mutations";
 import { useQuery, useMutation } from "@apollo/react-hooks";
 
@@ -33,7 +35,8 @@ function useBundle(args = {}) {
     const [addBundleItems] = useMutation(addBundleItemsMutation);
     const [removeBundleItems] = useMutation(removeBundleItemsMutation);
     const [createBundleItemsGroup] = useMutation(createBundleItemsGroupMutation);
-
+    const [removeBundleItemsGroup] = useMutation(removeBundleItemsGroupMutation);
+    const [updateBundleItemsGroup] = useMutation(updateBundleItemsGroupMutation);
     const { data: bundleQueryResult, isLoading, refetch: refetchBundle } = useQuery(productBundleQuery, {
         variables: {
             shopId,
@@ -77,7 +80,8 @@ function useBundle(args = {}) {
     const onAddBundleItems = useCallback(async ({
         itemIds,
         bundleId: bundleIdLocal = productBundle._id,
-        shopId: shopIdLocal = shopId
+        shopId: shopIdLocal = shopId,
+        groupId
     }) => {
         try {
             await addBundleItems({
@@ -85,7 +89,8 @@ function useBundle(args = {}) {
                     input: {
                         itemIds,
                         bundleId: bundleIdLocal,
-                        shopId: shopIdLocal
+                        shopId: shopIdLocal,
+                        groupId
                     }
                 }
             });
@@ -140,26 +145,60 @@ function useBundle(args = {}) {
 
             refetchBundle();
 
-            enqueueSnackbar("Grupo creado correctamente", { variant: "sucess" });
+            enqueueSnackbar("Grupo creado correctamente", { variant: "success" });
         } catch (error) {
             console.error(error.message);
             enqueueSnackbar(`${error.message}`, { variant: "error" });
         }
     }
 
-    const updateBundleItemsGroup = ({ title, limit }) => {
+    const handleUpdateBundleItemsGroup = async ({ groupId, title, limit }) => {
         try {
-            if (Number.isNaN(Number(limit))) throw new Error("el campo límite debe ser de tipo texto");
+            if (limit && Number.isNaN(Number(limit))) throw new Error("el campo límite debe ser de tipo texto");
+            const groupInput = {
+                title,
+                limit: Number(limit)
+            }
 
+            await updateBundleItemsGroup({
+                variables: {
+                    input: {
+                        groupId,
+                        bundleId,
+                        shopId,
+                        group: groupInput
+                    }
+                }
+            });
 
+            refetchBundle();
+
+            enqueueSnackbar("Grupo actualizado correctamente", { variant: "success" });
         } catch (error) {
             console.error(error.message);
             enqueueSnackbar(`${error.message}`, { variant: "error" });
         }
     }
 
-    const removeBundleItemsGroup = () => {
+    const handleRemoveBundleItemsGroup = async (groupId) => {
+        try {
+            await removeBundleItemsGroup({
+                variables: {
+                    input: {
+                        groupId,
+                        bundleId,
+                        shopId
+                    }
+                }
+            });
 
+            refetchBundle();
+
+            enqueueSnackbar("Grupo eliminado correctamente", { variant: "success" });
+        } catch (error) {
+            console.error(error.message);
+            enqueueSnackbar(`${error.message}`, { variant: "error" });
+        }
     }
 
     return {
@@ -171,8 +210,8 @@ function useBundle(args = {}) {
         onRemoveBundleItems,
         shopId,
         createBundleItemsGroup: handleCreateBundleItemsGroup,
-        updateBundleItemsGroup,
-        removeBundleItemsGroup
+        handleUpdateBundleItemsGroup,
+        handleRemoveBundleItemsGroup
     }
 
 }
